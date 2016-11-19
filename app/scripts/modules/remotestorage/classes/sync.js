@@ -41,6 +41,32 @@ define([
             _.bindAll(this, 'onReady', 'syncAll', 'onRsChange');
 
             RS.access.claim('laverna', 'rw');
+            
+            // mrhTODO - review...
+            // SAFE Network backend requires application identity and required permissions rather than
+            // API keys (authentication is handled by the user via SAFE Launcher, not a server)
+            RS.setApiKeys('safenetwork', 
+                {   
+                    // For details see SAFE Launcher /auth JSON API
+                    app: {
+                        name: 'Laverna (SAFE demo)',     // Your app name etc.
+                        version: '0.0.1',
+                        vendor: 'Laverna / theWebalyst',
+                        id: 'org.remotestorage.lavernarsdemo',      // Identifies stored data (unique per vendor)
+                        permissions: ['SAFE_DRIVE_ACCESS']   // List of permissions to request. On authorisation, 
+                    },
+                                                        // holds permissions granted by user
+                }
+            ); 
+        //remoteStorage.disconnect();//mrhTODO disconnect() to start with a clean slate every time
+
+            // Googledrive option
+            /*
+        remoteStorage.setApiKeys('googledrive', {
+               clientId: '857377956471-0qma3pqj34k7sio6d17bhnu3rvjqu57e.apps.googleusercontent.com'
+            });
+            */
+            
             RS.displayWidget();
 
             // Listen to RemoteStorage events
